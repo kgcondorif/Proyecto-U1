@@ -7,6 +7,38 @@ void shellSort(vector<int> &v);
 void quickSort(vector<int> &v, int inicio, int fin);
 
 int main(){
+    vector<int> a1, a2;
+    int n;
+
+    cin >> n;
+    a1.resize(n);
+    a2.resize(n);
+    for (int i = 0; i < n; i++){
+        cin >> a1[i];
+        a2[i] = a1[i];
+    }
+
+    cout << "Vector original: ";
+    for (int i = 0; i < n; i++){
+        cout << a1[i] << " ";
+    }
+    cout << endl;
+    
+    shellSort(a1);
+    quickSort(a2, 0, n - 1);
+
+    cout << "Vector ordenado con ShellSort: ";
+    for (int i = 0; i < n; i++){
+        cout << a1[i] << " ";
+    }
+    cout << endl;
+    
+    cout << "Vector ordenado con QuickSort: ";
+    for (int i = 0; i < n; i++){
+        cout << a2[i] << " ";
+    }
+    cout << endl;
+
     return 0;
 }
 
@@ -36,10 +68,10 @@ void quickSort(vector<int> &v, int inicio, int fin){
     int der = fin;
     int pivote = v[inicio];
 
-    while (izq <= der) {
+    while (izq < der) {
         for (der; der > izq; der--) {
             if (v[der] < pivote) {
-                v[izq] = v[der];
+                v[k] = v[der];
                 v[der] = pivote;
                 k = der;
                 break;
@@ -47,14 +79,15 @@ void quickSort(vector<int> &v, int inicio, int fin){
         }
         for (izq; izq < der; izq++) {
             if (v[izq] > pivote) {
-                v[der] = v[izq];
+                v[k] = v[izq];
                 v[izq] = pivote;
                 k = izq;
                 break;
             }
         }
     }
-    if (inicio < k) {
+
+    if (inicio < k - 1) {
         quickSort(v, inicio, k - 1);
     }
     if (k + 1 < fin) {
