@@ -6,19 +6,17 @@ using namespace std;
 struct Contadores {
     long comparaciones;
     long intercambios;
+    long profundidad;
 };
 
 void shellSort(vector<int> &v, Contadores &c);
-void quickSort(vector<int> &v, int inicio, int fin, Contadores &c);
+void quickSort(vector<int> &v, int inicio, int fin, Contadores &c, int profundidad);
 
 int main(){
     vector<int> a1, a2;
-    Contadores c1, c2;
+    Contadores c1 = {0, 0, 0};
+    Contadores c2 = {0, 0, 0};
     int n;
-    c1.comparaciones = 0;
-    c1.intercambios = 0;
-    c2.comparaciones = 0;
-    c2.intercambios = 0;
 
     cin >> n;
     a1.resize(n);
@@ -35,7 +33,7 @@ int main(){
     cout << endl;
     
     shellSort(a1, c1);
-    quickSort(a2, 0, n - 1, c2);
+    quickSort(a2, 0, n - 1, c2, 1);
 
     cout << "Vector ordenado con ShellSort: ";
     for (int i = 0; i < n; i++){
@@ -54,6 +52,7 @@ int main(){
     cout << "Metricas de QuickSort: " << endl;
     cout << "Comparaciones: " << c2.comparaciones << endl;
     cout << "Intercambios: " << c2.intercambios << endl;
+    cout << "Profundidad de recursion: " << c2.profundidad << endl;
 
     return 0;
 }
@@ -78,6 +77,7 @@ void shellSort(vector<int> &v, Contadores &c){
                 }
             
             }
+
             for (int h = i + k; h > j + k; h -= k){
                 v[h] = v[h - k];
                 c.intercambios++;
@@ -91,7 +91,15 @@ void shellSort(vector<int> &v, Contadores &c){
     }
 }
 
-void quickSort(vector<int> &v, int inicio, int fin, Contadores &c){
+void quickSort(vector<int> &v, int inicio, int fin, Contadores &c, int profundidad){
+    if (inicio >= fin){
+        return;
+    }
+
+    if (profundidad > c.profundidad) {
+        c.profundidad = profundidad;
+    }
+
     int k = inicio;
     int izq = inicio;
     int der = fin;
@@ -108,6 +116,7 @@ void quickSort(vector<int> &v, int inicio, int fin, Contadores &c){
                 break;
             }
         }
+
         for (izq; izq < der; izq++) {
             c.comparaciones++;
             if (v[izq] > pivote) {
@@ -120,10 +129,6 @@ void quickSort(vector<int> &v, int inicio, int fin, Contadores &c){
         }
     }
 
-    if (inicio < k - 1) {
-        quickSort(v, inicio, k - 1, c);
-    }
-    if (k + 1 < fin) {
-        quickSort(v, k + 1, fin, c);
-    }
+    quickSort(v, inicio, k - 1, c, profundidad + 1);
+    quickSort(v, k + 1, fin, c, profundidad + 1);
 }
