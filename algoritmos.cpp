@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
 
 using namespace std;
 
@@ -7,6 +8,7 @@ struct Contadores {
     long comparaciones;
     long intercambios;
     long profundidad;
+    double tiempo;
 };
 
 void shellSort(vector<int> &v, Contadores &c);
@@ -14,8 +16,8 @@ void quickSort(vector<int> &v, int inicio, int fin, Contadores &c, int profundid
 
 int main(){
     vector<int> a1, a2;
-    Contadores c1 = {0, 0, 0};
-    Contadores c2 = {0, 0, 0};
+    Contadores c1 = {0, 0, 0, 0};
+    Contadores c2 = {0, 0, 0, 0};
     int n;
 
     cin >> n;
@@ -32,8 +34,15 @@ int main(){
     }
     cout << endl;
     
+    auto inicio = chrono::high_resolution_clock::now();
     shellSort(a1, c1);
+    auto final = chrono::high_resolution_clock::now();
+    c1.tiempo = chrono::duration<double, milli>(final - inicio).count();
+
+    auto inicio2 = chrono::high_resolution_clock::now();
     quickSort(a2, 0, n - 1, c2, 1);
+    auto final2 = chrono::high_resolution_clock::now();
+    c2.tiempo = chrono::duration<double, milli>(final2 - inicio2).count();
 
     cout << "Vector ordenado con ShellSort: ";
     for (int i = 0; i < n; i++){
@@ -41,6 +50,7 @@ int main(){
     }
     cout << endl;
     cout << "Metricas de ShellSort: " << endl;
+    cout << "Tiempo: " << c1.tiempo << " ms" << endl;
     cout << "Comparaciones: " << c1.comparaciones << endl;
     cout << "Intercambios: " << c1.intercambios << endl;
 
@@ -50,6 +60,7 @@ int main(){
     }
     cout << endl;
     cout << "Metricas de QuickSort: " << endl;
+    cout << "Tiempo: " << c2.tiempo << " ms" << endl;
     cout << "Comparaciones: " << c2.comparaciones << endl;
     cout << "Intercambios: " << c2.intercambios << endl;
     cout << "Profundidad de recursion: " << c2.profundidad << endl;
