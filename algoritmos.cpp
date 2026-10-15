@@ -3,12 +3,22 @@
 
 using namespace std;
 
-void shellSort(vector<int> &v);
-void quickSort(vector<int> &v, int inicio, int fin);
+struct Contadores {
+    long comparaciones;
+    long intercambios;
+};
+
+void shellSort(vector<int> &v, Contadores &c);
+void quickSort(vector<int> &v, int inicio, int fin, Contadores &c);
 
 int main(){
     vector<int> a1, a2;
+    Contadores c1, c2;
     int n;
+    c1.comparaciones = 0;
+    c1.intercambios = 0;
+    c2.comparaciones = 0;
+    c2.intercambios = 0;
 
     cin >> n;
     a1.resize(n);
@@ -24,45 +34,64 @@ int main(){
     }
     cout << endl;
     
-    shellSort(a1);
-    quickSort(a2, 0, n - 1);
+    shellSort(a1, c1);
+    quickSort(a2, 0, n - 1, c2);
 
     cout << "Vector ordenado con ShellSort: ";
     for (int i = 0; i < n; i++){
         cout << a1[i] << " ";
     }
     cout << endl;
-    
+    cout << "Metricas de ShellSort: " << endl;
+    cout << "Comparaciones: " << c1.comparaciones << endl;
+    cout << "Intercambios: " << c1.intercambios << endl;
+
     cout << "Vector ordenado con QuickSort: ";
     for (int i = 0; i < n; i++){
         cout << a2[i] << " ";
     }
     cout << endl;
+    cout << "Metricas de QuickSort: " << endl;
+    cout << "Comparaciones: " << c2.comparaciones << endl;
+    cout << "Intercambios: " << c2.intercambios << endl;
 
     return 0;
 }
 
-void shellSort(vector<int> &v){
+void shellSort(vector<int> &v, Contadores &c){
     int n = v.size();
     int k, aux;
-    k = n + 1;
+    k = (n + 1) / 2;
+    
     while (k >= 1) {
-        k /= 2;
         for (int i = 0; i + k < n; i++){
             aux = v[i + k];
             int j = i;
-            while (j >= 0 && aux < v[j]){
-                j -= k;
+
+            while (j >= 0){
+                c.comparaciones++;
+                if (aux < v[j]){
+                    j -= k;
+                } 
+                else {
+                    break;
+                }
+            
             }
             for (int h = i + k; h > j + k; h -= k){
                 v[h] = v[h - k];
+                c.intercambios++;
             }
-            v[j + k] = aux;
+            if (j != i) {
+                v[j + k] = aux;
+                c.intercambios++;
+            }
         }
+        k /= 2;
     }
 }
 
-void quickSort(vector<int> &v, int inicio, int fin){
+void quickSort(vector<int> &v, int inicio, int fin, Contadores &c){
     int k = inicio;
     int izq = inicio;
     int der = fin;
@@ -70,27 +99,31 @@ void quickSort(vector<int> &v, int inicio, int fin){
 
     while (izq < der) {
         for (der; der > izq; der--) {
+            c.comparaciones++;
             if (v[der] < pivote) {
                 v[k] = v[der];
                 v[der] = pivote;
                 k = der;
+                c.intercambios++;
                 break;
             }
         }
         for (izq; izq < der; izq++) {
+            c.comparaciones++;
             if (v[izq] > pivote) {
                 v[k] = v[izq];
                 v[izq] = pivote;
                 k = izq;
+                c.intercambios++;
                 break;
             }
         }
     }
 
     if (inicio < k - 1) {
-        quickSort(v, inicio, k - 1);
+        quickSort(v, inicio, k - 1, c);
     }
     if (k + 1 < fin) {
-        quickSort(v, k + 1, fin);
+        quickSort(v, k + 1, fin, c);
     }
 }
