@@ -18,52 +18,46 @@ void quickSort(vector<int> &v, int inicio, int fin, Contadores &c, int profundid
 
 int main(){
     vector<int> a1, a2;
-    Contadores c1 = {0, 0, 0, 0};
-    Contadores c2 = {0, 0, 0, 0};
+    Contadores c1;
+    Contadores c2;
     int n, patron, semilla;
 
     cin >> n >> patron >> semilla;
 
-    a1 = VectorAleatorio(n, patron, semilla);
-    a2 = a1;
+    for (int rep = 0; rep < 5; rep++){
+        a1 = VectorAleatorio(n, patron, semilla);
+        a2 = a1;
+        c1 = {0, 0, 0, 0.0};
+        c2 = {0, 0, 0, 0.0};
 
-    cout << "Vector original: ";
-    for (int i = 0; i < n; i++){
-        cout << a1[i] << " ";
+        auto inicio = chrono::high_resolution_clock::now();
+        shellSort(a1, c1);
+        auto final = chrono::high_resolution_clock::now();
+        c1.tiempo = chrono::duration<double, milli>(final - inicio).count();
+
+        auto inicio2 = chrono::high_resolution_clock::now();
+        quickSort(a2, 0, n - 1, c2, 1);
+        auto final2 = chrono::high_resolution_clock::now();
+        c2.tiempo = chrono::duration<double, milli>(final2 - inicio2).count();
+
+        cout << endl;
+        cout << "Metricas de ShellSort: " << endl;
+        cout << "Semilla: " << semilla << endl;
+        cout << "Tiempo: " << c1.tiempo << " ms" << endl;
+        cout << "Comparaciones: " << c1.comparaciones << endl;
+        cout << "Intercambios: " << c1.intercambios << endl;
+
+        cout << endl;
+        cout << "Metricas de QuickSort: " << endl;
+        cout << "Semilla: " << semilla << endl;
+        cout << "Tiempo: " << c2.tiempo << " ms" << endl;
+        cout << "Comparaciones: " << c2.comparaciones << endl;
+        cout << "Intercambios: " << c2.intercambios << endl;
+        cout << "Profundidad maxima de recursion: " << c2.profundidad << endl;
+
+        semilla++;
     }
-    cout << endl;
     
-    auto inicio = chrono::high_resolution_clock::now();
-    shellSort(a1, c1);
-    auto final = chrono::high_resolution_clock::now();
-    c1.tiempo = chrono::duration<double, milli>(final - inicio).count();
-
-    auto inicio2 = chrono::high_resolution_clock::now();
-    quickSort(a2, 0, n - 1, c2, 1);
-    auto final2 = chrono::high_resolution_clock::now();
-    c2.tiempo = chrono::duration<double, milli>(final2 - inicio2).count();
-
-    cout << "Vector ordenado con ShellSort: ";
-    for (int i = 0; i < n; i++){
-        cout << a1[i] << " ";
-    }
-    cout << endl;
-    cout << "Metricas de ShellSort: " << endl;
-    cout << "Tiempo: " << c1.tiempo << " ms" << endl;
-    cout << "Comparaciones: " << c1.comparaciones << endl;
-    cout << "Intercambios: " << c1.intercambios << endl;
-
-    cout << "Vector ordenado con QuickSort: ";
-    for (int i = 0; i < n; i++){
-        cout << a2[i] << " ";
-    }
-    cout << endl;
-    cout << "Metricas de QuickSort: " << endl;
-    cout << "Tiempo: " << c2.tiempo << " ms" << endl;
-    cout << "Comparaciones: " << c2.comparaciones << endl;
-    cout << "Intercambios: " << c2.intercambios << endl;
-    cout << "Profundidad maxima de recursion: " << c2.profundidad << endl;
-
     return 0;
 }
 
