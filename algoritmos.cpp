@@ -2,6 +2,7 @@
 #include <vector>
 #include <chrono>
 #include <random>
+#include <fstream>
 
 using namespace std;
 
@@ -12,7 +13,7 @@ struct Contadores {
     double tiempo;
 };
 
-vector<int> VectorAleatorio(int n, int patron, int semilla);
+vector<int> VectorAleatorio(int n, string patron, int semilla);
 void shellSort(vector<int> &v, Contadores &c);
 void quickSort(vector<int> &v, int inicio, int fin, Contadores &c, int profundidad);
 
@@ -21,8 +22,11 @@ int main(){
     Contadores c1;
     Contadores c2;
     int n[3] = {1000, 10000, 100000};
-    int patron[5] = {1, 2, 3, 4, 5};
+    string patron[5] = {"Aleatorio", "Ascendente", "Descendente", "Casi_Ordenado", "Duplicados"};
     int semilla;
+
+    ofstream archivo("Datos.csv");
+    archivo << "Algoritmo,n,Patron,Repeticion,Tiempo_ms,Comparaciones,Intercambios,Profundidad_Recursion,Semilla" << endl;
 
     for (int i = 0 ; i < 3; i++){
         for (int j = 0; j < 5; j++){
@@ -43,24 +47,8 @@ int main(){
                 auto final2 = chrono::high_resolution_clock::now();
                 c2.tiempo = chrono::duration<double, milli>(final2 - inicio2).count();
 
-                cout << endl;
-                cout << "Metricas de ShellSort: " << endl;
-                cout << "Semilla: " << semilla << endl;
-                cout << "Patron: " << patron[j] << endl;
-                cout << "Longitud del vector: " << n[i] << endl;
-                cout << "Tiempo: " << c1.tiempo << " ms" << endl;
-                cout << "Comparaciones: " << c1.comparaciones << endl;
-                cout << "Intercambios: " << c1.intercambios << endl;
-
-                cout << endl;
-                cout << "Metricas de QuickSort: " << endl;
-                cout << "Semilla: " << semilla << endl;
-                cout << "Patron: " << patron[j] << endl;
-                cout << "Longitud del vector: " << n[i] << endl;
-                cout << "Tiempo: " << c2.tiempo << " ms" << endl;
-                cout << "Comparaciones: " << c2.comparaciones << endl;
-                cout << "Intercambios: " << c2.intercambios << endl;
-                cout << "Profundidad maxima de recursion: " << c2.profundidad << endl;
+                archivo << "ShellSort," << n[i] << "," << patron[j] << "," << rep + 1 << "," << c1.tiempo << "," << c1.comparaciones << "," << c1.intercambios << "," << c1.profundidad << "," << semilla << endl;
+                archivo << "QuickSort," << n[i] << "," << patron[j] << "," << rep + 1 << "," << c2.tiempo << "," << c2.comparaciones << "," << c2.intercambios << "," << c2.profundidad << "," << semilla << endl;
 
                 semilla++;
             }
@@ -70,27 +58,27 @@ int main(){
     return 0;
 }
 
-vector<int> VectorAleatorio(int n, int patron, int semilla){
+vector<int> VectorAleatorio(int n, string patron, int semilla){
     vector<int> v(n);
     mt19937 rng(semilla);
 
-    if (patron == 1){
+    if (patron == "Aleatorio"){
         uniform_int_distribution<int> dist(1, n * 10);
         for (int i = 0; i < n; i++){
             v[i] = dist(rng);
         }
     } 
-    else if (patron == 2){
+    else if (patron == "Ascendente"){
         for (int i = 0; i < n; i++){
             v[i] = i + 1;
         }
     } 
-    else if (patron == 3){
+    else if (patron == "Descendente"){
         for (int i = 0; i < n; i++){
             v[i] = n - i;
         }
     } 
-    else if (patron == 4){
+    else if (patron == "Casi_Ordenado"){
         for (int i = 0; i < n; i++){
             v[i] = i + 1;
         }
@@ -104,7 +92,7 @@ vector<int> VectorAleatorio(int n, int patron, int semilla){
             v[idx2] = aux;
         }
     } 
-    else if (patron == 5){
+    else if (patron == "Duplicados"){
         uniform_int_distribution<int> dist(1, 20);
         for (int i = 0; i < n; i++){
             v[i] = dist(rng);
