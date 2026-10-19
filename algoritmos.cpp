@@ -149,6 +149,10 @@ void quickSort(vector<int> &v, int inicio, int fin, Contadores &c, int profundid
     int izq = inicio;
     int der = fin;
     int pivote = v[k];
+    v[k] = v[inicio];
+    v[inicio] = pivote;
+    k = inicio;
+    c.intercambios++;
 
     while (izq < der) {
         for (der; der > izq; der--) {
