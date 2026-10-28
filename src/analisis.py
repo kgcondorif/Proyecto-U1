@@ -2,4 +2,5 @@ import pandas as pd
 
 df = pd.read_csv('../results/Datos.csv')
 
-print(df.head())
+tiempo = df.groupby(['Algoritmo', 'n', 'Patron'])['Tiempo_ms'].agg(['mean', 'median', 'std', 'min', 'max']).reset_index()
+print(tiempo)
