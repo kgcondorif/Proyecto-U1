@@ -23,48 +23,87 @@ profundidad.columns = ['n', 'Patron', 'Promedio', 'Maximo']
 profundidad.to_csv('../results/Resumen_profundidad.csv', index = False)
 
 
-sns.set_theme(style="whitegrid")
+sns.set_theme(style = "whitegrid")
+df_qs = df[df['Algoritmo'] == 'QuickSort']
+df_ss = df[df['Algoritmo'] == 'ShellSort']
 
-fig1, ax1 = plt.subplots(figsize=(10, 6))
+fig1, ax1 = plt.subplots(figsize = (10, 6))
 sns.lineplot(
-    data=df, x='n', y='Tiempo_ms', hue='Algoritmo', style='Patron',
-    markers=True, dashes=False, errorbar=None, ax=ax1
+    data = df_qs, x = 'n', y = 'Tiempo_ms', style = 'Patron', hue = 'Patron',
+    markers = True, dashes = False, errorbar = None, ax = ax1, linewidth = 2, markersize = 8
 )
-ax1.set_title("Escalabilidad: Tamaño de Entrada (n) vs Tiempo de Ejecución (ms)")
-ax1.set_xlabel("Tamaño de Entrada (n)")
-ax1.set_ylabel("Tiempo Promedio (ms)")
+ax1.set_title("Fig. 1: QuickSort - Escalabilidad de Tiempo (ms)", fontsize = 12, fontweight = 'bold')
+ax1.set_xlabel("Tamaño de Entrada (n log)", fontsize = 10)
+ax1.set_ylabel("Tiempo Promedio (ms log)", fontsize = 10)
 ax1.set_xscale('log')
 ax1.set_yscale('log')
-ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+ax1.legend(bbox_to_anchor=(1.05, 1), loc = 'upper left', frameon = True)
 fig1.tight_layout()
 
-fig1.savefig('../results/Grafico_N_vs_Tiempo.png', dpi=300)
+fig1.savefig('../results/Quicksort_N_vs_Tiempo.png', dpi = 300)
 plt.close(fig1)
 
-fig2, ax2 = plt.subplots(figsize=(12, 6))
-sns.boxplot(data=df, x='Patron', y='Tiempo_ms', hue='Algoritmo', ax=ax2)
-ax2.set_title("Distribución de Tiempos por Patrón de Entrada (30 Repeticiones)")
-ax2.set_xlabel("Patrón de Entrada")
-ax2.set_ylabel("Tiempo de Ejecución (ms)")
-plt.setp(ax2.get_xticklabels(), rotation=45)
-ax2.legend(loc='upper right')
+fig2, ax2 = plt.subplots(figsize = (10, 6))
+sns.lineplot(
+    data = df_qs, x = 'n', y = 'Comparaciones', style = 'Patron', hue = 'Patron',
+    markers = True, dashes = False, errorbar = None, ax = ax2, linewidth = 2, markersize = 8
+)
+ax2.set_title("Fig. 2: QuickSort - Análisis Operacional de Comparaciones", fontsize = 12, fontweight = 'bold')
+ax2.set_xlabel("Tamaño de Entrada (n log)", fontsize = 10)
+ax2.set_ylabel("Comparaciones Promedio (log)", fontsize = 10)
+ax2.set_xscale('log')
+ax2.set_yscale('log')
+ax2.legend(bbox_to_anchor = (1.05, 1), loc = 'upper left', frameon = True)
 fig2.tight_layout()
 
-fig2.savefig('../results/Patrones.png', dpi=300)
+fig2.savefig('../results/Quicksort_N_vs_Comparaciones.png', dpi = 300)
 plt.close(fig2)
 
-fig3, ax3 = plt.subplots(figsize=(10, 6))
+fig3, ax3 = plt.subplots(figsize = (10, 6))
 sns.lineplot(
-    data=df, x='n', y='Comparaciones', hue='Algoritmo', style='Patron',
-    markers=True, dashes=False, errorbar=None, ax=ax3
+    data = df_ss, x = 'n', y = 'Tiempo_ms', style = 'Patron', hue = 'Patron',
+    markers = True, dashes = False, errorbar = None, ax = ax3, linewidth = 2, markersize = 8
 )
-ax3.set_title("Análisis Operacional: Tamaño de Entrada (n) vs Número de Comparaciones")
-ax3.set_xlabel("Tamaño de Entrada (n)")
-ax3.set_ylabel("Comparaciones Promedio")
+ax3.set_title("Fig. 3: ShellSort - Escalabilidad de Tiempo (ms)", fontsize = 12, fontweight = 'bold')
+ax3.set_xlabel("Tamaño de Entrada (n log)", fontsize = 10)
+ax3.set_ylabel("Tiempo Promedio (ms log)", fontsize = 10)
 ax3.set_xscale('log')
 ax3.set_yscale('log')
-ax3.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+ax3.legend(bbox_to_anchor = (1.05, 1), loc = 'upper left', frameon = True)
 fig3.tight_layout()
 
-fig3.savefig('../results/Grafico_N_vs_Comparaciones.png', dpi=300)
+fig3.savefig('../results/Shellsort_N_vs_Tiempo.png', dpi = 300)
 plt.close(fig3)
+
+fig4, ax4 = plt.subplots(figsize = (10, 6))
+sns.lineplot(
+    data = df_ss, x = 'n', y = 'Comparaciones', style = 'Patron', hue = 'Patron',
+    markers = True, dashes = False, errorbar = None, ax = ax4, linewidth = 2, markersize = 8
+)
+ax4.set_title("Fig. 4: ShellSort - Análisis Operacional de Comparaciones", fontsize = 12, fontweight = 'bold')
+ax4.set_xlabel("Tamaño de Entrada (n log)", fontsize = 10)
+ax4.set_ylabel("Comparaciones Promedio (log)", fontsize = 10)
+ax4.set_xscale('log')
+ax4.set_yscale('log')
+ax4.legend(bbox_to_anchor = (1.05, 1), loc = 'upper left', frameon = True)
+fig4.tight_layout()
+
+fig4.savefig('../results/Shellsort_N_vs_Comparaciones.png', dpi = 300)
+plt.close(fig4)
+
+df_max_n = df[df['n'] == 100000]
+
+fig5, ax5 = plt.subplots(figsize=(12, 6))
+sns.barplot(
+    data = df_max_n, x = 'Patron', y = 'Tiempo_ms', hue = 'Algoritmo',
+    ax = ax5, errorbar = 'sd'
+)
+ax5.set_title(f"Fig. 5: Comparativa de Rendimiento por Patrón de Entrada (n = 100000)", fontsize = 12, fontweight = 'bold')
+ax5.set_xlabel("Patrón de Entrada", fontsize = 10)
+ax5.set_ylabel("Tiempo Promedio (ms)", fontsize = 10)
+plt.setp(ax5.get_xticklabels(), rotation = 30, ha = 'right')
+ax5.legend(loc = 'upper right', frameon = True)
+fig5.tight_layout()
+
+fig5.savefig('../results/Rendimiento_comparativa.png', dpi = 300)
+plt.close(fig5)
