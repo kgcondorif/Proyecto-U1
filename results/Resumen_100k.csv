@@ -1,0 +1,11 @@
+Algoritmo,Patron,Ti_promedio,Com_promedio,Int_promedio
+QuickSort,Aleatorio,12.42,2708257.64,748874.98
+QuickSort,Ascendente,2.87,1503410.0,99999.0
+QuickSort,Casi_Ordenado,4.19,1604144.54,161206.7
+QuickSort,Descendente,3.31,1626345.0,209997.0
+QuickSort,Duplicados,285.51,212728007.26,271922.92
+ShellSort,Aleatorio,28.79,4341817.06,3664913.42
+ShellSort,Ascendente,4.46,1500006.0,0.0
+ShellSort,Casi_Ordenado,22.73,3416406.58,2537606.02
+ShellSort,Descendente,9.24,2244585.0,1655808.0
+ShellSort,Duplicados,11.87,2017938.56,830947.36

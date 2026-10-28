@@ -1,0 +1,16 @@
+n,Patron,Promedio,Maximo
+1000,Aleatorio,20.52,25
+1000,Ascendente,9.0,9
+1000,Casi_Ordenado,11.28,13
+1000,Descendente,11.0,11
+1000,Duplicados,76.1,91
+10000,Aleatorio,30.48,38
+10000,Ascendente,13.0,13
+10000,Casi_Ordenado,16.14,19
+10000,Descendente,15.0,15
+10000,Duplicados,670.14,756
+100000,Aleatorio,39.48,46
+100000,Ascendente,16.0,16
+100000,Casi_Ordenado,20.76,23
+100000,Descendente,18.0,18
+100000,Duplicados,6770.54,7409
