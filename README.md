@@ -6,7 +6,7 @@ Repositorio oficial del proyecto de evaluación experimental y auditoría operac
 
 ## Descripción del proyecto
 
-A pesar de que la teoría de complejidad asintótica establece cotas analíticas bien definidas para los algoritmos basados en comparaciones ($\mathcal{O}(n \log n)$ frente a $\mathcal{O}(n^2)$), el rendimiento real en plataformas modernas está fuertemente supeditado a factores microarquitectónicos como la localidad de referencia en la jerarquía de memoria caché ($L1/L2/L3$), la predicción de saltos y la gestión de la pila de llamadas.
+A pesar de que la teoría de complejidad asintótica establece cotas analíticas bien definidas para los algoritmos basados en comparaciones O(n log n) frente a O(n^2), el rendimiento real en plataformas modernas está fuertemente supeditado a factores microarquitectónicos como la localidad de referencia en la jerarquía de memoria caché ($L1/L2/L3$), la predicción de saltos y la gestión de la pila de llamadas.
 
 Este proyecto implementa un banco de pruebas estricto y autocontenido en C++17 que audita el comportamiento empírico de ShellSort (algoritmo iterativo, *in-place*, basado en secuencias de incrementos decrecientes de Shell $k = \lfloor n/2 \rfloor$) y QuickSort (algoritmo recursivo basado en división y conquista optimizado con estrategia de pivote central).
 
@@ -41,6 +41,7 @@ El estudio analiza un espacio muestral de 1,500 ejecuciones controladas contempl
 | **Semillas** | `1 - 50` (para garantizar reproducibilidad) |
 | **Réplicas Estadísticas** | 50 corridas independientes por cada configuración ($3 \times 5 \times 50 = 1,500$ ejecuciones) |
 | **Métricas Capturadas** | Tiempo (ms vía `std::chrono::high_resolution_clock`), comparaciones relacionales, intercambios y profundidad de pila |
+| **Ultimo Commit hash** | (`8d2bdd5ca284519637932cd83d2ee04747745d6b`)
 
 ---
 
@@ -106,10 +107,7 @@ cd Proyecto-U1
 Compila el código fuente en C++ utilizando la bandera de optimización máxima `-O3` para garantizar la fidelidad de las mediciones de hardware:
 
 ```bash
-# Compilar el banco de pruebas
 g++ -O3 src/algoritmos.cpp -o benchmark_sorting
-
-# Ejecutar las 1,500 pruebas (generará el registro base en results/Datos.csv)
 ./benchmark_sorting
 ```
 
@@ -137,3 +135,11 @@ python src/analisis.py
 Tacna, Perú.
 
 * **Kael Gonzalo Condori Fora** (Código: 2026-119003) — *Correo:* [kgcondorif@unjbg.edu.pe](mailto:kgcondorif@unjbg.edu.pe)
+
+---
+
+## Video de exposición
+
+**Video de Youtube**
+
+Link: [https://youtu.be/tedNgr1efP8](https://youtu.be/tedNgr1efP8)
