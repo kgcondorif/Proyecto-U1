@@ -75,7 +75,7 @@ ax3.set_yscale('log')
 ax3.legend(bbox_to_anchor = (1.05, 1), loc = 'upper left', frameon = True)
 fig3.tight_layout()
 
-fig3.savefig('../results/Shellsort_N_vs_Tiempo.png', dpi = 300)
+fig3.savefig('results/Shellsort_N_vs_Tiempo.png', dpi = 300)
 plt.close(fig3)
 
 fig4, ax4 = plt.subplots(figsize = (10, 6))
