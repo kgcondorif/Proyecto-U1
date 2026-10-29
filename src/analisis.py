@@ -2,25 +2,25 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-df = pd.read_csv('../results/Datos.csv')
+df = pd.read_csv('results/Datos.csv')
 
 tiempo = df.groupby(['Algoritmo', 'n', 'Patron'])['Tiempo_ms'].agg(['mean', 'median', 'std', 'min', 'max']).reset_index().round(4)
 tiempo.columns = ['Algoritmo', 'n', 'Patron', 'Promedio', 'Mediana', 'Dispersion_estandar', 'Minimo', 'Maximo']
-tiempo.to_csv('../results/Resumen_tiempo.csv', index = False)
+tiempo.to_csv('results/Resumen_tiempo.csv', index = False)
 
 operaciones = df.groupby(['Algoritmo', 'n', 'Patron'])[['Comparaciones', 'Intercambios']].agg(['mean', 'median', 'min', 'max']).reset_index().round(2)
 operaciones.columns = ['Algoritmo', 'n', 'Patron', 'Com_promedio', 'Com_mediana', 'Com_minimo', 'Com_maximo', 'Int_promedio', 'Int_mediana', 'Int_minimo', 'Int_maximo']
-operaciones.to_csv('../results/Resumen_operaciones.csv', index = False)
+operaciones.to_csv('results/Resumen_operaciones.csv', index = False)
 
 df_100k = df[df['n'] == 100000]
 mayor_esc = df_100k.groupby(['Algoritmo', 'Patron'])[['Tiempo_ms', 'Comparaciones', 'Intercambios']].agg('mean').reset_index().round(2)
 mayor_esc.columns = ['Algoritmo', 'Patron', 'Ti_promedio', 'Com_promedio', 'Int_promedio']
-mayor_esc.to_csv('../results/Resumen_100k.csv', index = False)
+mayor_esc.to_csv('results/Resumen_100k.csv', index = False)
 
 df_quicksort = df[df['Algoritmo'] == 'QuickSort']
 profundidad = df_quicksort.groupby(['n', 'Patron'])['Profundidad_Recursion'].agg(['mean', 'max']).reset_index().round(2)
 profundidad.columns = ['n', 'Patron', 'Promedio', 'Maximo']
-profundidad.to_csv('../results/Resumen_profundidad.csv', index = False)
+profundidad.to_csv('results/Resumen_profundidad.csv', index = False)
 
 
 sns.set_theme(style = "whitegrid")
@@ -40,7 +40,7 @@ ax1.set_yscale('log')
 ax1.legend(bbox_to_anchor=(1.05, 1), loc = 'upper left', frameon = True)
 fig1.tight_layout()
 
-fig1.savefig('../results/Quicksort_N_vs_Tiempo.png', dpi = 300)
+fig1.savefig('results/Quicksort_N_vs_Tiempo.png', dpi = 300)
 plt.close(fig1)
 
 fig2, ax2 = plt.subplots(figsize = (10, 6))
@@ -56,7 +56,7 @@ ax2.set_yscale('log')
 ax2.legend(bbox_to_anchor = (1.05, 1), loc = 'upper left', frameon = True)
 fig2.tight_layout()
 
-fig2.savefig('../results/Quicksort_N_vs_Comparaciones.png', dpi = 300)
+fig2.savefig('results/Quicksort_N_vs_Comparaciones.png', dpi = 300)
 plt.close(fig2)
 
 fig3, ax3 = plt.subplots(figsize = (10, 6))
@@ -88,7 +88,7 @@ ax4.set_yscale('log')
 ax4.legend(bbox_to_anchor = (1.05, 1), loc = 'upper left', frameon = True)
 fig4.tight_layout()
 
-fig4.savefig('../results/Shellsort_N_vs_Comparaciones.png', dpi = 300)
+fig4.savefig('results/Shellsort_N_vs_Comparaciones.png', dpi = 300)
 plt.close(fig4)
 
 df_max_n = df[df['n'] == 100000]
@@ -118,5 +118,5 @@ for p in ax5.patches:
 ax5.set_ylim(0, ax5.get_ylim()[1] * 1.15)
 fig5.tight_layout()
 
-fig5.savefig('../results/Rendimiento_comparativa.png', dpi = 300)
+fig5.savefig('results/Rendimiento_comparativa.png', dpi = 300)
 plt.close(fig5)

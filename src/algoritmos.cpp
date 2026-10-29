@@ -25,7 +25,7 @@ int main(){
     string patron[5] = {"Aleatorio", "Ascendente", "Descendente", "Casi_Ordenado", "Duplicados"};
     int semilla;
 
-    ofstream archivo("../results/Datos.csv");
+    ofstream archivo("results/Datos.csv");
     archivo << "Algoritmo,n,Patron,Repeticion,Tiempo_ms,Comparaciones,Intercambios,Profundidad_Recursion,Semilla" << endl;
 
     for (int i = 0 ; i < 3; i++){
