@@ -25,10 +25,14 @@ int main(){
     string patron[5] = {"Aleatorio", "Ascendente", "Descendente", "Casi_Ordenado", "Duplicados"};
     int semilla;
 
+    cout << "QuickSort vs ShellSort" << endl;
+    cout << "Iniciando prueba" << endl;
+
     ofstream archivo("results/Datos.csv");
     archivo << "Algoritmo,n,Patron,Repeticion,Tiempo_ms,Comparaciones,Intercambios,Profundidad_Recursion,Semilla" << endl;
 
     for (int i = 0 ; i < 3; i++){
+        cout << "Ejecutando prueba con arreglos de " << n[i] << " elementos" << endl;
         for (int j = 0; j < 5; j++){
             semilla = 1;
             for (int rep = 0; rep < 50; rep++){
@@ -54,6 +58,8 @@ int main(){
             }
         }
     }
+
+    cout << "Benchmark concluido, su archivo CSV ya esta exportado";
 
     return 0;
 }

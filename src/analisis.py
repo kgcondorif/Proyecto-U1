@@ -2,8 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+print("Iniciando con el procesamiento estadistico y grafico")
 df = pd.read_csv('results/Datos.csv')
+print("Leyendo archivo de datos crudos")
 
+print("Calculando los resumenes estadisticos")
 tiempo = df.groupby(['Algoritmo', 'n', 'Patron'])['Tiempo_ms'].agg(['mean', 'median', 'std', 'min', 'max']).reset_index().round(4)
 tiempo.columns = ['Algoritmo', 'n', 'Patron', 'Promedio', 'Mediana', 'Dispersion_estandar', 'Minimo', 'Maximo']
 tiempo.to_csv('results/Resumen_tiempo.csv', index = False)
@@ -22,7 +25,7 @@ profundidad = df_quicksort.groupby(['n', 'Patron'])['Profundidad_Recursion'].agg
 profundidad.columns = ['n', 'Patron', 'Promedio', 'Maximo']
 profundidad.to_csv('results/Resumen_profundidad.csv', index = False)
 
-
+print("Generando y guardando imagenes y graficos")
 sns.set_theme(style = "whitegrid")
 df_qs = df[df['Algoritmo'] == 'QuickSort']
 df_ss = df[df['Algoritmo'] == 'ShellSort']
@@ -120,3 +123,5 @@ fig5.tight_layout()
 
 fig5.savefig('results/Rendimiento_comparativa.png', dpi = 300)
 plt.close(fig5)
+
+print("Proceso finalizado")
