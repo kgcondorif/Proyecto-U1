@@ -103,6 +103,19 @@ ax5.set_xlabel("Patrón de Entrada", fontsize = 10)
 ax5.set_ylabel("Tiempo Promedio (ms)", fontsize = 10)
 plt.setp(ax5.get_xticklabels(), rotation = 30, ha = 'right')
 ax5.legend(loc = 'upper right', frameon = True)
+for p in ax5.patches:
+    height = p.get_height()
+    if height > 0: 
+        ax5.annotate(
+            f'{height:.2f}', 
+            (p.get_x() + p.get_width() / 2., height),
+            ha = 'center', va = 'bottom',
+            xytext = (0, 3),
+            textcoords = 'offset points',
+            fontsize = 9, fontweight = 'bold'
+        )
+
+ax5.set_ylim(0, ax5.get_ylim()[1] * 1.15)
 fig5.tight_layout()
 
 fig5.savefig('../results/Rendimiento_comparativa.png', dpi = 300)
